@@ -399,7 +399,8 @@ if ( ( $ARGV[0] eq 'add-generic' ) && ( $#ARGV == 2 ) ) {
 Usage: add-generic <category> <file> - Adds words from <file> to category <category>
        add-wordnet-affect <category> <file> - Adds words from WordNet dump <file> to category <category>
        add-wiebie <file> - Adds words from Janyce Wiebe's Subjectivity Lexicon
-       classify <file>       - Outputs classification of <file>
+       classify-bayes <file>       - Outputs classification of <file> with Naive Bayes computation
+       classify-voter <file>       - Outputs classification of <file> with simple voting scheme
        stats                 - Prints stats of the model
        export <file>         - Exports model to <file>
 EOUSAGE
