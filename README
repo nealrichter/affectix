@@ -1,7 +1,8 @@
 Affectix
 
 A simple affective rating of text tool and framework.
- - DANGER it's hacked together and doesn't work well yet!
+ - DANGER this is a hacker framework and not a state-of-the-art algorithm!
+ - This is intended for use by non-expert practitioners curious about the basics of these types of systems.
 
 LICENSE
 # Copyright (C) 2011 by J. Neal Richter
@@ -88,3 +89,5 @@ TODO for interested parties:
 I've implemented commercial grade sentiment analysis code before, and this is not that.
 This hacker-oriented framework is intended for use by non-expert practitioners curious about the basics of these types of systems.
 
+Other sources of unlabeled subjective/affective keywords
+http://www.ukp.tu-darmstadt.de/data/sentiment-analysis/
