@@ -74,3 +74,15 @@ Results
  Bayes was 55% accurate on Rotten/Negative ratings, and 33% accurate for Fresh/Positive ratings
 
 So at this point, this is a great example of why overly simple approaches fail in sentiment analysis of language!
+
+TODO:
+  - find more categorized keywords
+  - devise a better hueristic
+  - test on other types of data
+  - add in a part-of-speech tagger and utilize the part of speech tags avail in some data sets
+  - create a transductive learning algorithm to bootstrap from labeled reviews?
+  - Reimplement some state-of-the-art appraches from the literature
+     http://www.cs.cornell.edu/home/llee/opinion-mining-sentiment-analysis-survey.html 
+     http://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html
+
+
