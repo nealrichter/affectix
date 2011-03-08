@@ -1,0 +1,48 @@
+Fetch the sentiment/affect/subjectivity keyword data.
+
+http://www.cs.pitt.edu/~wiebe/resources.html
+   Look for the Subjectivity Lexicon, download and extract the zipfile
+   Use the file 'subjclueslen1-HLTEMNLP05.tff'
+
+http://www.cse.unt.edu/~rada/affectivetext/
+   Look for the WordNet Affect TGZ file, download and extract.
+   See below for usage
+
+http://urbanoalvarez.es/blog/?download=badwords
+   Save as a zip file, extract.
+   See below for usage
+
+Load the sentiment/affect/subjectivity keyword data
+ $rm words.db 
+ $./affectix.pl add-wordnet-affect positive keywords/wordnet_affect/joy.txt
+ $./affectix.pl add-wordnet-affect negative keywords/wordnet_affect/sadness.txt 
+ $./affectix.pl add-wordnet-affect negative keywords/wordnet_affect/anger.txt
+ $./affectix.pl add-wordnet-affect negative keywords/wordnet_affect/fear.txt 
+ $./affectix.pl add-wiebe keywords/wiebe/subjclueslen1-HLTEMNLP05.tff 
+ $./affectix.pl add-generic negative keywords/badwords.txt
+ $./affectix.pl stats
+
+Fetch and prepare the Movie Reviews
+ $curl http://www.rottentomatoes.com/syndication/tab/complete_dvds.txt > rottentomatoes_complete_dvds.txt
+ $curl http://www.rottentomatoes.com/syndication/tab/complete_movies.txt >rottentomatoes_complete_movies.txt
+ $cat rottentomatoes_complete_dvds.txt rottentomatoes_complete_movies.txt |./rotten_tomatoes_data_prepare.pl
+
+156 reviews total
+79 FRESH (positive) reviews
+77 ROTTEN (negative) reviews
+
+Test the algorithms
+nrichter@nrichter-8530:~/Rubicon/code/github/affectix$ find test/FRESH/ -exec ./affectix.pl classify-voter '{}' \;|cut -d' ' -f2 |grep positive |wc -l
+55
+nrichter@nrichter-8530:~/Rubicon/code/github/affectix$ find test/FRESH/ -exec ./affectix.pl classify-bayes '{}' \;|cut -d' ' -f2 |grep positive |wc -l
+26
+nrichter@nrichter-8530:~/Rubicon/code/github/affectix$ find test/ROTTEN/ -exec ./affectix.pl classify-voter '{}' \;|cut -d' ' -f2 |grep negative |wc -l
+25
+nrichter@nrichter-8530:~/Rubicon/code/github/affectix$ find test/ROTTEN/ -exec ./affectix.pl classify-bayes '{}' \;|cut -d' ' -f2 |grep negative |wc -l
+43
+
+Results
+ Voter was 69% accurate on Fresh/Positive ratings, but only 32% accurate for Rotten/Negative ratings
+ Bayes was 55% accurate on Rotten/Negative ratings, and 33% accurate for Fresh/Positive ratings
+
+So at this point, this is a great example of why overly simple approaches fail in sentiment analysis of language!
