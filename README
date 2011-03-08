@@ -4,6 +4,10 @@ A simple affective rating of text tool and framework.
  - DANGER this is a hacker framework and not a state-of-the-art algorithm!
  - This is intended for use by non-expert practitioners curious about the basics of these types of systems.
 
+This framework was heavily inspired by and uses some code from 
+  Naive Bayesian Text Classification by John Graham-Cumming
+  http://www.ddj.com/development-tools/184406064
+
 LICENSE
 # Copyright (C) 2011 by J. Neal Richter
 # 
@@ -24,6 +28,14 @@ LICENSE
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
+
+Usage: add-generic <category> <file> - Adds words from <file> to category <category>
+       add-wordnet-affect <category> <file> - Adds words from WordNet dump <file> to category <category>
+       add-wiebie <file> - Adds words from Janyce Wiebe's Subjectivity Lexicon
+       classify-bayes <file>       - Outputs classification of <file> with Naive Bayes computation
+       classify-voter <file>       - Outputs classification of <file> with simple voting scheme
+       stats                 - Prints stats of the model
+       export <file>         - Exports model to <file>
 
 DIRECTIONS FOR USE
 
