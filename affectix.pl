@@ -259,7 +259,7 @@ sub model_export
     close(EXPCSV);
 }
 
-# Get the classification of a file from word counts
+# Get the classification of a file from word counts via Naive Bayes
 # Adapted from:
 # Naive Bayesian Text Classification by John Graham-Cumming
 sub classify_bayes
@@ -312,6 +312,7 @@ sub classify_bayes
 }
 
 
+# Get the classification of a file from word counts and a voting scheme
 sub classify_voter
 {
     my ( %words_in_file ) = @_;
@@ -328,35 +329,24 @@ sub classify_voter
         $total += $words{$entry};
     }
 
-    # Run through words and calculate the vote for each category
-
-    my %score;
+    # Run through words and look for hits in the DB
+    # Use a dumb voting scheme with a magic number to accentuate multi-hits
+    my %vote_score;
     foreach my $word (sort (keys(%words_in_file))) {
         foreach my $category (keys %count) {
             if ( defined( $words{"$category=$word"} ) ) {
                 #print "[$word] $category: ".$score{$category}." += (". $words{"$category=$word"}. "* 2.71)". "\n";
-                $score{$category} += ( $words{"$category=$word"} * 2.71 );
-            } else {
-                #print "[$word] $category: ".$score{$category}." += log( 0.01 / ".$count{$category}." )\n";
-                #$score{$category} += log( 0.01 / $count{$category} );
-            }
+                $vote_score{$category} += ( $words{"$category=$word"} * 2.71 );
+            } 
         }
     }
-    # Add in the probability that the text is of a specific category
 
-    foreach my $category (keys %count) {
-        #print "(pr) $category: ".$score{$category}." += log(". $count{$category}." / ".$total." )\n";
-        #$score{$category} += log( $count{$category} / $total );
-    }
-
-    #print the log likelyhood of the categories in sorted order
+    #print the votes of the categories in sorted order
     my @score_array;
     my @class_array;
 
-    foreach my $category (sort { $score{$b} <=> $score{$a} } keys %count) {
-        print " $category $score{$category}, ";
-        $score_array[@score_array] = $score{$category}; 
-        $class_array[@class_array] = $category; 
+    foreach my $category (sort { $vote_score{$b} <=> $vote_score{$a} } keys %count) {
+        print " $category $vote_score{$category}, ";
     }
     print "\n";
 }
